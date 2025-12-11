@@ -91,10 +91,6 @@ type
   IController<T: class> = interface(IPersistence<T>)
   ['{0C7B72B1-76BA-4463-BA7F-FAC7A90470EC}']
     function IsValid(Entity: T; out MessageContext: String): Boolean;
-  end;
-
-  IControllerDetails<T: class> = interface(IController<T>) @
-  ['{39E3F7D1-43E8-4B3F-842C-6CE4E8F06B4D}']
     function FindAll(Id: Integer): TObjectList<T>;
   end;
 
