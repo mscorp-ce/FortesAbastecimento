@@ -14,7 +14,8 @@ uses
   uModel.Repository.DataManager in 'model\repository\uModel.Repository.DataManager.pas',
   uModel.Design.Factory.DataManagerFactory in 'model\design\factory\uModel.Design.Factory.DataManagerFactory.pas',
   uView.FormConsult in 'view\consult\uView.FormConsult.pas' {frmConsult},
-  uView.FormBaseRegistration in 'view\form_registration\uView.FormBaseRegistration.pas' {frmBaseRegistration};
+  uView.FormBaseRegistration in 'view\form_registration\uView.FormBaseRegistration.pas' {frmBaseRegistration},
+  uView.FormFilters in 'view\consult\uView.FormFilters.pas' {frmFiltros};
 
 {$R *.res}
 
@@ -25,5 +26,6 @@ begin
   Application.CreateForm(TfrmMain, frmMain);
   Application.CreateForm(TfrmConsult, frmConsult);
   Application.CreateForm(TfrmBaseRegistration, frmBaseRegistration);
+  Application.CreateForm(TfrmFiltros, frmFiltros);
   Application.Run;
 end.
