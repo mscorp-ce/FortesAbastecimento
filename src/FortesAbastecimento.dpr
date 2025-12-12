@@ -12,7 +12,9 @@ uses
   uInfra.Libary in 'Infra\uInfra.Libary.pas',
   uModel.FireDAC in 'model\uModel.FireDAC.pas',
   uModel.Repository.DataManager in 'model\repository\uModel.Repository.DataManager.pas',
-  uModel.Design.Factory.DataManagerFactory in 'model\design\factory\uModel.Design.Factory.DataManagerFactory.pas';
+  uModel.Design.Factory.DataManagerFactory in 'model\design\factory\uModel.Design.Factory.DataManagerFactory.pas',
+  uView.FormConsult in 'view\consult\uView.FormConsult.pas' {frmConsult},
+  uView.FormBaseRegistration in 'view\form_registration\uView.FormBaseRegistration.pas' {frmBaseRegistration};
 
 {$R *.res}
 
@@ -21,5 +23,7 @@ begin
   Application.MainFormOnTaskbar := True;
   ReportMemoryLeaksOnShutdown := True;
   Application.CreateForm(TfrmMain, frmMain);
+  Application.CreateForm(TfrmConsult, frmConsult);
+  Application.CreateForm(TfrmBaseRegistration, frmBaseRegistration);
   Application.Run;
 end.
