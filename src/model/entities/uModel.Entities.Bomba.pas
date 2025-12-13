@@ -13,6 +13,7 @@ type
     FDescricao: string;
     FTanque: TTanque;
   public
+    constructor Create();
     destructor Destroy; override;
     property Id: Integer read FId write FId;
     property Numero: Integer read FNumero write FNumero;
@@ -24,11 +25,18 @@ implementation
 
 { TBomba }
 
-destructor TBomba.Destroy;
+constructor TBomba.Create();
 begin
-  FTanque.Free;
+  FTanque:= TTanque.Create();
 
-  inherited;
+  inherited Create();
+end;
+
+destructor TBomba.Destroy();
+begin
+  FTanque.Free();
+
+  inherited Destroy();
 end;
 
 end.
