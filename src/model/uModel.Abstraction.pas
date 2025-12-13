@@ -91,13 +91,11 @@ type
   IController<T: class> = interface(IPersistence<T>)
   ['{0C7B72B1-76BA-4463-BA7F-FAC7A90470EC}']
     function IsValid(Entity: T; out MessageContext: String): Boolean;
-    function FindAll(Id: Integer): TObjectList<T>;
   end;
 
   IService<T: class> = interface(IPersistence<T>)
   ['{5E47E4E7-D251-4AD9-BA5E-00B5DBAAD58C}']
     function IsValid(Entity: T; out MessageContext: String): Boolean;
-    function FindAll(Id: Integer): TObjectList<T>;
   end;
 
   IDomain<T: class> = interface(IService<T>)
