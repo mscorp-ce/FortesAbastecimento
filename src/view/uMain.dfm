@@ -10,6 +10,27 @@ object frmMain: TfrmMain
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  Menu = mmMenu
   Position = poScreenCenter
   TextHeight = 15
+  object mmMenu: TMainMenu
+    Left = 344
+    Top = 48
+    object mmiCadastro: TMenuItem
+      Caption = 'Cadastro'
+      object mmiAbastecimento: TMenuItem
+        Caption = 'Abastecimento'
+      end
+    end
+    object mmiRelatrio: TMenuItem
+      Caption = 'Relat'#243'rio'
+      object mmiAbastecimentos: TMenuItem
+        Caption = 'Abastecimentos'
+      end
+    end
+    object mmiSair: TMenuItem
+      Caption = 'Sair'
+      OnClick = mmiSairClick
+    end
+  end
 end
