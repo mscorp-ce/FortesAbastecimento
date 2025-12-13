@@ -8,14 +8,14 @@ uses
 type
   TStatementFactory = class
   public
-    class function GetStatement(DataManager: IDataManager): IStatement;
+    class function GetStatement(DataManager: IDataManager<TFDConnection>): IStatement;
   end;
 
 implementation
 
 { TStatementFactory }
 
-class function TStatementFactory.GetStatement(DataManager: IDataManager): IStatement;
+class function TStatementFactory.GetStatement(DataManager: IDataManager<TFDConnection>): IStatement;
 begin
   Result:= TStatement.Create(DataManager);
 end;
