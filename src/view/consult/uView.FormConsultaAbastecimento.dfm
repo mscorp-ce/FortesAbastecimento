@@ -78,6 +78,7 @@ inherited frmConsultaAbastecimento: TfrmConsultaAbastecimento
     object cdsConsultQUANTIDADE_LITROS: TCurrencyField
       DisplayLabel = 'QuantidadeListros'
       FieldName = 'QUANTIDADE_LITROS'
+      DisplayFormat = '0.000'
     end
     object cdsConsultPRECO_LITRO: TCurrencyField
       DisplayLabel = 'Pre'#231'oLitro'
