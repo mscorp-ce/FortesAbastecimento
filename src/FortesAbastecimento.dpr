@@ -30,7 +30,10 @@ uses
   uModel.Repository.ConstsStatement.Bomba in 'model\repository\uModel.Repository.ConstsStatement.Bomba.pas',
   uController.DataConverter.Abastecimento in 'controller\uController.DataConverter.Abastecimento.pas',
   uView.Abastecimento in 'view\uView.Abastecimento.pas' {frmAbastecimento},
-  uView.FormConsultaAbastecimento in 'view\consult\uView.FormConsultaAbastecimento.pas' {frmConsultaAbastecimento};
+  uView.FormConsultaAbastecimento in 'view\consult\uView.FormConsultaAbastecimento.pas' {frmConsultaAbastecimento},
+  uController.RootBomba in 'controller\uController.RootBomba.pas',
+  uModel.Service.Bomba in 'model\services\uModel.Service.Bomba.pas',
+  uController.DataConverter.Bomba in 'controller\uController.DataConverter.Bomba.pas';
 
 {$R *.res}
 
