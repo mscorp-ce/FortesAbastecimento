@@ -27,7 +27,10 @@ uses
   uModel.Services.Exception.EServiceAbastecimentoBusinessException in 'model\services\uModel.Services.Exception.EServiceAbastecimentoBusinessException.pas',
   uController.Abastecimento in 'controller\uController.Abastecimento.pas',
   uModel.Repository.Bomba in 'model\repository\uModel.Repository.Bomba.pas',
-  uModel.Repository.ConstsStatement.Bomba in 'model\repository\uModel.Repository.ConstsStatement.Bomba.pas';
+  uModel.Repository.ConstsStatement.Bomba in 'model\repository\uModel.Repository.ConstsStatement.Bomba.pas',
+  uController.DataConverter.Abastecimento in 'controller\uController.DataConverter.Abastecimento.pas',
+  uView.Abastecimento in 'view\uView.Abastecimento.pas' {frmAbastecimento},
+  uView.FormConsultaAbastecimento in 'view\consult\uView.FormConsultaAbastecimento.pas' {frmConsultaAbastecimento};
 
 {$R *.res}
 
