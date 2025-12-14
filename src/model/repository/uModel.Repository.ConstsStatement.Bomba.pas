@@ -7,7 +7,8 @@ const
     'SELECT BOM.ID_BOMBA, ' + sLineBreak +
     '       BOM.ID_TANQUE, ' + sLineBreak +
     '       BOM.NUMERO_BOMBA, ' + sLineBreak +
-    '       BOM.DESCRICAO ' + sLineBreak +
+    '       BOM.DESCRICAO, ' + sLineBreak +
+    '       BOM.PRECO_LITRO ' + sLineBreak +
     '  FROM BOMBAS BOM ';
 
   QUERY_CLASE_WHERE_BY_ID = ' WHERE ID_BOMBA = :ID_BOMBA ';
