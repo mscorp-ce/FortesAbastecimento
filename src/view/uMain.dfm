@@ -12,6 +12,7 @@ object frmMain: TfrmMain
   Font.Style = []
   Menu = mmMenu
   Position = poScreenCenter
+  WindowState = wsMaximized
   TextHeight = 15
   object mmMenu: TMainMenu
     Left = 344
@@ -20,6 +21,7 @@ object frmMain: TfrmMain
       Caption = 'Cadastro'
       object mmiAbastecimento: TMenuItem
         Caption = 'Abastecimento'
+        OnClick = mmiAbastecimentoClick
       end
     end
     object mmiRelatrio: TMenuItem

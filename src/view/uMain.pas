@@ -15,6 +15,7 @@ type
     mmiAbastecimentos: TMenuItem;
     mmiSair: TMenuItem;
     procedure mmiSairClick(Sender: TObject);
+    procedure mmiAbastecimentoClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -26,7 +27,22 @@ var
 
 implementation
 
+uses
+  uView.FormConsultaAbastecimento;
+
 {$R *.dfm}
+
+procedure TfrmMain.mmiAbastecimentoClick(Sender: TObject);
+var
+  LfrmConsultaAbastecimento: TfrmConsultaAbastecimento;
+begin
+  LfrmConsultaAbastecimento:= TfrmConsultaAbastecimento.Create(Self);
+  try
+    LfrmConsultaAbastecimento.ShowModal();
+  finally
+    FreeAndNil(LfrmConsultaAbastecimento)
+  end;
+end;
 
 procedure TfrmMain.mmiSairClick(Sender: TObject);
 begin
