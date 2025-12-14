@@ -20,6 +20,7 @@ type
     cdsConsultIMPOSTO: TCurrencyField;
     procedure grdConsultaKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
+    procedure grdConsultDblClick(Sender: TObject);
   private
     { Private declarations }
     ControllerAbastecimento: IController<TAbastecimento>;
@@ -50,12 +51,12 @@ uses
   uController.Abastecimento, uController.DataConverter.Abastecimento, uView.Abastecimento,
   uView.CustomFormFilterAbastecimento;
 
-{ TfrmConsulta2 }
+{ TfrmConsultaAbastecimento }
 
 procedure TfrmConsultaAbastecimento.All();
 begin
   inherited;
-  Search(QUERY_MOVIMENTO_ABASTECIMENTO);
+  Search('');
 end;
 
 procedure TfrmConsultaAbastecimento.Alter();
@@ -150,6 +151,12 @@ begin
   inherited;
   if (Shift = [ssCtrl]) and (Key = DELETE) then
     Key := CANCEL_ACTION_OF_DELETE;
+end;
+
+procedure TfrmConsultaAbastecimento.grdConsultDblClick(Sender: TObject);
+begin
+  inherited;
+  Alter();
 end;
 
 procedure TfrmConsultaAbastecimento.ExecuteFrom(const Id: Integer);

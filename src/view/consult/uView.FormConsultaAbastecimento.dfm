@@ -4,8 +4,15 @@ inherited frmConsultaAbastecimento: TfrmConsultaAbastecimento
   TextHeight = 13
   inherited pnlControl: TPanel
     StyleElements = [seFont, seBorder]
+    inherited spbAlter: TSpeedButton
+      Left = 6
+      Top = 132
+      ExplicitLeft = 6
+      ExplicitTop = 132
+    end
   end
   inherited grdConsult: TDBGrid
+    OnDblClick = grdConsultDblClick
     OnKeyDown = grdConsultaKeyDown
     Columns = <
       item
