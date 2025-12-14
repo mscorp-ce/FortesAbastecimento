@@ -12,6 +12,7 @@ type
     FNumero: Integer;
     FDescricao: string;
     FTanque: TTanque;
+    FPrecoLitro: Currency;
   public
     constructor Create();
     destructor Destroy; override;
@@ -19,6 +20,7 @@ type
     property Numero: Integer read FNumero write FNumero;
     property Descricao: string read FDescricao write FDescricao;
     property Tanque: TTanque read FTanque write FTanque;
+    property PrecoLitro: Currency read FPrecoLitro write FPrecoLitro;
   end;
 
 implementation

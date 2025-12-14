@@ -209,6 +209,7 @@ begin
     Entity.Tanque.Id := Statement.Query.FieldByName('ID_TANQUE').AsInteger;
     Entity.Numero := Statement.Query.FieldByName('NUMERO_BOMBA').AsInteger;
     Entity.Descricao := Statement.Query.FieldByName('DESCRICAO').AsString;
+    Entity.PrecoLitro:= Statement.Query.FieldByName('PRECO_LITRO').AsCurrency;
 
   except
     on Error: EFDDBEngineException do
