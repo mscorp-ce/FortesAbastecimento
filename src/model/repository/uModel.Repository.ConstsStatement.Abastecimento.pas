@@ -54,7 +54,7 @@ const
   QUERY_UPDATE_ABASTECIMENTO_BY_ID =
     'UPDATE ABASTECIMENTOS'+ sLineBreak +
     '   SET ID_BOMBA = :ID_BOMBA, '+ sLineBreak +
-    '       DATA_HORA = :DATA_HORA, = :DATA_HORA, '+ sLineBreak +
+    '       DATA_HORA = :DATA_HORA, '+ sLineBreak +
     '       QUANTIDADE_LITROS = :QUANTIDADE_LITROS, '+ sLineBreak +
     '       PRECO_LITRO = :PRECO_LITRO, '+ sLineBreak +
     '       VALOR_TOTAL = :VALOR_TOTAL, '+ sLineBreak +
