@@ -55,7 +55,7 @@ end;
 
 function TControllerRootAbastecimento.FindAll(): TObjectList<TAbastecimento>;
 begin
-  Result:= nil;
+  Result:= AbastecimentoService.FindAll();
 end;
 
 function TControllerRootAbastecimento.FindAll(CommadSQL: String;
