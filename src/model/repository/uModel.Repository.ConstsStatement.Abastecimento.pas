@@ -16,15 +16,29 @@ const
     '          BOM.NUMERO_BOMBA ' + sLineBreak +
     ' ORDER BY DIA, TANQUE, NUMERO_BOMBA; ';
 
-  QUERY_ABASTECIMENTOS_BY_ID =
+  QUERY_MOVIMENTO_ABASTECIMENTO =
     'SELECT ABA.ID_ABASTECIMENTO, ' + sLineBreak +
+    '       ABA.ID_BOMBA, ' + sLineBreak +
+    '       BOM.DESCRICAO NOME_BOMBA, ' + sLineBreak +
+    '       ABA.DATA_HORA, ' + sLineBreak +
+    '       ABA.QUANTIDADE_LITROS, ' + sLineBreak +
+    '       ABA.PRECO_LITRO, ' + sLineBreak +
+    '       ABA.VALOR_TOTAL, ' + sLineBreak +
+    '       ABA.IMPOSTO ' + sLineBreak +
+    '  FROM ABASTECIMENTOS ABA ' + sLineBreak +
+    '  JOIN BOMBAS BOM ON(BOM.ID_BOMBA=ABA.ID_BOMBA) ';
+
+  QUERY_ABASTECIMENTOS_BY_ID =
+    QUERY_MOVIMENTO_ABASTECIMENTO + ' WHERE ABA.ID_ABASTECIMENTO = :ID_ABASTECIMENTO ';
+
+    {'SELECT ABA.ID_ABASTECIMENTO, ' + sLineBreak +
     '       ABA.ID_BOMBA, ' + sLineBreak +
     '       ABA.DATA_HORA, ' + sLineBreak +
     '       ABA.QUANTIDADE_LITROS, ' + sLineBreak +
     '       ABA.VALOR_TOTAL, ' + sLineBreak +
     '       ABA.IMPOSTO ' + sLineBreak +
     '  FROM ABASTECIMENTOS ABA ' + sLineBreak +
-    ' WHERE ABA.ID_ABASTECIMENTO = :ID_ABASTECIMENTO ';
+    ' WHERE ABA.ID_ABASTECIMENTO = :ID_ABASTECIMENTO '; }
 
   QUERY_INSERT_ABASTECIMENTO =
     'INSERT INTO ABASTECIMENTOS(ID_BOMBA, DATA_HORA, QUANTIDADE_LITROS, PRECO_LITRO, VALOR_TOTAL, IMPOSTO) ' + sLineBreak +

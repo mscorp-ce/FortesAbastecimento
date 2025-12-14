@@ -123,7 +123,7 @@ begin
     List:= TObjectList<TAbastecimento>.Create;
 
     Statement.Query.SQL.Clear();
-    Statement.SQL(QUERY_ABASTECIMENTO).Open();
+    Statement.SQL(QUERY_MOVIMENTO_ABASTECIMENTO).Open();
 
     PopulateListEntitie(List, Statement);
 
@@ -251,8 +251,9 @@ begin
     Entity.Id := Statement.Query.FieldByName('ID_ABASTECIMENTO').AsInteger;
     Entity.DataHora := Statement.Query.FieldByName('DATA_HORA').AsDateTime;
     Entity.Bomba.Id := Statement.Query.FieldByName('ID_BOMBA').AsInteger;
+    Entity.Bomba.Descricao := Statement.Query.FieldByName('NOME_BOMBA').AsString;
     Entity.QuantidadeLitros := Statement.Query.FieldByName('QUANTIDADE_LITROS').AsCurrency;
-    Entity.PrecoLitro := Statement.Query.Params.ParamByName('PRECO_LITRO').AsCurrency;
+    Entity.PrecoLitro := Statement.Query.FieldByName('PRECO_LITRO').AsCurrency;
     Entity.ValorTotal := Statement.Query.FieldByName('VALOR_TOTAL').AsCurrency;
     Entity.Imposto := Statement.Query.FieldByName('IMPOSTO').AsCurrency;
 
