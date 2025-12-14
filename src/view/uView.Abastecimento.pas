@@ -6,8 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes,
   Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, uView.FormBaseRegistration,
   Vcl.StdCtrls, Vcl.ComCtrls, Vcl.Buttons, Vcl.ExtCtrls, Data.DB, Datasnap.DBClient,
-  Vcl.DBCtrls, Vcl.WinXCalendars, uModel.Abstraction, uModel.Entities.Abastecimento,
-  Vcl.Grids, Vcl.DBGrids, Vcl.Samples.Spin, Vcl.NumberBox;
+  Vcl.DBCtrls, Vcl.WinXCalendars, uModel.Abstraction, uModel.Entities.Abastecimento;
 
 type
   TfrmAbastecimento = class(TfrmBaseRegistration)
@@ -17,20 +16,29 @@ type
     lkpBomba: TDBLookupComboBox;
     lblBomba: TLabel;
     dsBomba: TDataSource;
-    cdsBomba: TClientDataSet;
-    cdsBombaid_bomba: TIntegerField;
-    cdsBombadescricao: TStringField;
     dtpDataHora: TDateTimePicker;
     lblQtdeLitros: TLabel;
     lblPrecoLitro: TLabel;
     lblValorTotal: TLabel;
     lblImposto: TLabel;
-    nubQtdeLitros: TNumberBox;
-    nubPrecoLitro: TNumberBox;
-    nubValorTotal: TNumberBox;
-    nubImposto: TNumberBox;
-  protected
-    procedure DoShow; override;
+    edtQtdeLitros: TEdit;
+    edtPrecoLitro: TEdit;
+    edtValorTotal: TEdit;
+    edtImposto: TEdit;
+    cdsBomba: TClientDataSet;
+    cdsBombaID_BOMBA: TIntegerField;
+    cdsBombaID_TANQUE: TIntegerField;
+    cdsBombaNUMERO_BOMBA: TIntegerField;
+    cdsBombaDESCRICAO: TStringField;
+    cdsBombaPRECO_LITRO: TCurrencyField;
+    procedure edtQtdeLitrosKeyPress(Sender: TObject; var Key: Char);
+    procedure edtPrecoLitroKeyPress(Sender: TObject; var Key: Char);
+    procedure edtValorTotalKeyPress(Sender: TObject; var Key: Char);
+    procedure edtImpostoKeyPress(Sender: TObject; var Key: Char);
+    procedure edtQtdeLitrosChange(Sender: TObject);
+    procedure edtPrecoLitroChange(Sender: TObject);
+    procedure lkpBombaExit(Sender: TObject);
+    procedure edtValorTotalChange(Sender: TObject);
   private
     { Private declarations }
     ControllerAbastecimento: IController<TAbastecimento>;
@@ -38,8 +46,13 @@ type
     FId: Integer;
     procedure SetId(const Value: Integer);
     procedure EnableControls();
+    procedure OnKeyPress(Control: TEdit; Sender: TObject; var Key: Char);
+    procedure LoadingLookupBomba();
+    procedure CalcularValorTotal();
+    procedure CalcularImposto();
   protected
     { Protected declarations }
+    procedure DoShow(); override;
     procedure AddFocus(); override;
     procedure GetProperty(); override;
     procedure SetProperty(); override;
@@ -68,7 +81,9 @@ implementation
 
 uses
   System.Generics.Collections, uController.RootAbastecimento,
-  uController.DataConverter.Abastecimento, uController.Abastecimento;
+  uController.DataConverter.Abastecimento, uController.Abastecimento,
+  uModel.Entities.Bomba, uController.RootBomba,
+  uController.DataConverter.Bomba;
 
 function TfrmAbastecimento.Save(): Boolean;
 begin
@@ -113,10 +128,10 @@ begin
   Abastecimento.Id:= StrToIntDef(edtAbastecimento.Text, 0);
   Abastecimento.Bomba.Id:= lkpBomba.KeyValue;
   Abastecimento.DataHora:= dtpDataHora.DateTime;
-  Abastecimento.QuantidadeLitros:= nubQtdeLitros.Value;
-  Abastecimento.PrecoLitro:= nubPrecoLitro.Value;
-  Abastecimento.ValorTotal:= nubValorTotal.Value;
-  Abastecimento.Imposto:= nubImposto.Value;
+  Abastecimento.QuantidadeLitros:= StrToFloatDef(edtQtdeLitros.Text, 0);
+  Abastecimento.PrecoLitro:= StrToFloatDef(edtPrecoLitro.Text, 0);
+  Abastecimento.ValorTotal:= StrToFloatDef(edtValorTotal.Text, 0);
+  Abastecimento.Imposto:= StrToFloatDef(edtImposto.Text, 0);
 end;
 
 procedure TfrmAbastecimento.AddFocus();
@@ -144,11 +159,74 @@ begin
   State:= dsBrowse;
 end;
 
+procedure TfrmAbastecimento.CalcularImposto();
+const
+  INCIDE_IMPOSTO = 0.13;
+var
+  LValorTotal, LImposto: Currency;
+begin
+  LValorTotal := StrToFloatDef(edtValorTotal.Text, 0);
+  LImposto := LValorTotal * INCIDE_IMPOSTO;
+  edtImposto.Text := FormatFloat('0.000', LImposto);
+end;
+
+procedure TfrmAbastecimento.CalcularValorTotal();
+begin
+  edtValorTotal.Text := FloatToStr(StrToFloatDef(edtQtdeLitros.Text, 0) * StrToFloatDef(edtPrecoLitro.Text, 0));
+end;
+
 destructor TfrmAbastecimento.Destroy();
 begin
   FreeAndNil(Abastecimento);
 
   inherited Destroy;
+end;
+
+procedure TfrmAbastecimento.edtImpostoKeyPress(Sender: TObject; var Key: Char);
+begin
+  inherited;
+  OnKeyPress(edtImposto, Sender, Key);
+end;
+
+procedure TfrmAbastecimento.edtPrecoLitroChange(Sender: TObject);
+begin
+  inherited;
+  CalcularValorTotal();
+end;
+
+procedure TfrmAbastecimento.edtPrecoLitroKeyPress(Sender: TObject; var Key: Char);
+begin
+  inherited;
+  OnKeyPress(edtPrecoLitro, Sender, Key);
+end;
+
+procedure TfrmAbastecimento.edtQtdeLitrosChange(Sender: TObject);
+begin
+  inherited;
+  CalcularValorTotal();
+end;
+
+procedure TfrmAbastecimento.edtQtdeLitrosKeyPress(Sender: TObject; var Key: Char);
+begin
+  inherited;
+  OnKeyPress(edtQtdeLitros, Sender, Key);
+end;
+
+procedure TfrmAbastecimento.edtValorTotalChange(Sender: TObject);
+begin
+  inherited;
+  if (StrToFloatDef(edtQtdeLitros.Text, 0) > 0) and (StrToFloatDef(edtPrecoLitro.Text, 0) > 0) then
+    begin
+      edtValorTotal.OnChange := nil;
+      CalcularImposto();
+    end;
+  edtValorTotal.OnChange := edtValorTotalChange;
+end;
+
+procedure TfrmAbastecimento.edtValorTotalKeyPress(Sender: TObject; var Key: Char);
+begin
+  inherited;
+  OnKeyPress(edtValorTotal, Sender, Key);
 end;
 
 procedure TfrmAbastecimento.EnableControls();
@@ -164,6 +242,8 @@ begin
 
   EnableControls();
 
+  LoadingLookupBomba();
+
   AddFocus();
 
   if id > 0 then
@@ -174,7 +254,6 @@ begin
   else
     begin
       Abastecimento:= TAbastecimento.Create();
-      //edtProjectCode.Text:= IntToStr( ControllerProject.GeneratedValue );
     end;
 end;
 
@@ -184,10 +263,59 @@ begin
   edtAbastecimento.Text := IntToStr(Abastecimento.Id);
   lkpBomba.KeyValue := Abastecimento.Bomba.Id;
   dtpDataHora.DateTime := Abastecimento.DataHora;
-  nubQtdeLitros.Value := Abastecimento.QuantidadeLitros;
-  nubPrecoLitro.Value := Abastecimento.PrecoLitro;
-  nubValorTotal.Value := Abastecimento.ValorTotal;
-  nubImposto.Value := Abastecimento.Imposto;
+  edtQtdeLitros.Text := Abastecimento.QuantidadeLitros.ToString();
+  edtPrecoLitro.Text:= Abastecimento.PrecoLitro.ToString();
+  edtValorTotal.Text:= Abastecimento.ValorTotal.ToString();
+  edtImposto.Text := Abastecimento.Imposto.ToString();
+end;
+
+procedure TfrmAbastecimento.lkpBombaExit(Sender: TObject);
+begin
+  inherited;
+  edtPrecoLitro.Text := FloatToStr(cdsBomba.FieldByName('PRECO_LITRO').AsCurrency);
+end;
+
+procedure TfrmAbastecimento.LoadingLookupBomba();
+var
+  LControllerRootBomba: IRootController<TBomba>;
+  LDataConverter: IDataConverter<TBomba>;
+  LBombas: TObjectList<TBomba>;
+begin
+  LControllerRootBomba:= TControllerRootBomba.Create();
+  cdsBomba.Close();
+
+  cdsBomba.CreateDataSet();
+
+  LBombas := LControllerRootBomba.FindAll();
+  try
+    LDataConverter:= TDataConverterBomba.Create();
+    LDataConverter.Populate(LBombas, cdsBomba);
+
+    cdsBomba.Open();
+
+  finally
+    FreeAndNil(LBombas);
+  end;
+end;
+
+procedure TfrmAbastecimento.OnKeyPress(Control: TEdit; Sender: TObject; var Key: Char);
+const
+  BACKSPACE = #8;
+  DEL = #127;
+  PONTO = '.';
+  VIRGULA = ',';
+  LIMPAR = #0;
+begin
+  if CharInSet(Key, [BACKSPACE, DEL]) then
+    Exit;
+
+  if not CharInSet(Key, ['0'..'9', VIRGULA]) then
+    Key := LIMPAR
+  else if Key = VIRGULA then
+    begin
+      if Pos(',', Control.Text) > 0 then
+        Key := LIMPAR;
+    end;
 end;
 
 end.

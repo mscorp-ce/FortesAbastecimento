@@ -1,9 +1,9 @@
 inherited frmAbastecimento: TfrmAbastecimento
   Caption = 'Abastecimento'
   ClientHeight = 232
-  ClientWidth = 655
+  ClientWidth = 678
   StyleElements = [seFont, seClient, seBorder]
-  ExplicitWidth = 671
+  ExplicitWidth = 694
   ExplicitHeight = 271
   TextHeight = 13
   object lblAbastecimento: TLabel [0]
@@ -33,7 +33,7 @@ inherited frmAbastecimento: TfrmAbastecimento
     ParentFont = False
   end
   object lblBomba: TLabel [2]
-    Left = 136
+    Left = 145
     Top = 16
     Width = 39
     Height = 13
@@ -46,7 +46,7 @@ inherited frmAbastecimento: TfrmAbastecimento
     ParentFont = False
   end
   object lblQtdeLitros: TLabel [3]
-    Left = 135
+    Left = 144
     Top = 62
     Width = 106
     Height = 13
@@ -59,7 +59,7 @@ inherited frmAbastecimento: TfrmAbastecimento
     ParentFont = False
   end
   object lblPrecoLitro: TLabel [4]
-    Left = 262
+    Left = 278
     Top = 62
     Width = 61
     Height = 13
@@ -72,11 +72,11 @@ inherited frmAbastecimento: TfrmAbastecimento
     ParentFont = False
   end
   object lblValorTotal: TLabel [5]
-    Left = 389
+    Left = 412
     Top = 62
     Width = 61
     Height = 13
-    Caption = 'Pre'#231'o Litro'
+    Caption = 'Valor Total'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -11
@@ -100,18 +100,18 @@ inherited frmAbastecimento: TfrmAbastecimento
   object edtAbastecimento: TEdit [7]
     Left = 8
     Top = 35
-    Width = 121
+    Width = 128
     Height = 21
     ImeName = 'edtProjectCode'
     ReadOnly = True
     TabOrder = 0
   end
   inherited pnlControl: TPanel
-    Left = 525
+    Left = 548
     Height = 232
     TabOrder = 1
     StyleElements = [seFont, seBorder]
-    ExplicitLeft = 525
+    ExplicitLeft = 548
     ExplicitHeight = 232
     inherited spbRestore: TSpeedButton
       Top = 5
@@ -127,60 +127,67 @@ inherited frmAbastecimento: TfrmAbastecimento
     end
   end
   object lkpBomba: TDBLookupComboBox
-    Left = 135
+    Left = 146
     Top = 35
-    Width = 366
+    Width = 396
     Height = 21
     KeyField = 'id_bomba'
     ListField = 'descricao'
     ListSource = dsBomba
     TabOrder = 2
+    OnExit = lkpBombaExit
   end
   object dtpDataHora: TDateTimePicker
     Left = 8
     Top = 81
-    Width = 121
+    Width = 128
     Height = 21
     Date = 46004.000000000000000000
     Time = 0.897409675926610400
     Kind = dtkDateTime
     TabOrder = 3
   end
-  object nubQtdeLitros: TNumberBox
-    Left = 135
+  object edtQtdeLitros: TEdit
+    Left = 144
     Top = 81
-    Width = 121
+    Width = 128
     Height = 21
-    Mode = nbmFloat
-    MinValue = 1.000000000000000000
+    ImeName = 'edtProjectCode'
     TabOrder = 4
+    OnChange = edtQtdeLitrosChange
+    OnKeyPress = edtQtdeLitrosKeyPress
   end
-  object nubPrecoLitro: TNumberBox
-    Left = 262
+  object edtPrecoLitro: TEdit
+    Left = 278
     Top = 81
-    Width = 121
+    Width = 128
     Height = 21
-    Mode = nbmCurrency
-    MinValue = 1.000000000000000000
+    ImeName = 'edtProjectCode'
+    ReadOnly = True
     TabOrder = 5
+    OnChange = edtPrecoLitroChange
+    OnKeyPress = edtPrecoLitroKeyPress
   end
-  object nubValorTotal: TNumberBox
-    Left = 389
+  object edtValorTotal: TEdit
+    Left = 412
     Top = 81
-    Width = 121
+    Width = 128
     Height = 21
-    Mode = nbmCurrency
-    MinValue = 1.000000000000000000
+    ImeName = 'edtProjectCode'
+    ReadOnly = True
     TabOrder = 6
+    OnChange = edtValorTotalChange
+    OnKeyPress = edtValorTotalKeyPress
   end
-  object nubImposto: TNumberBox
+  object edtImposto: TEdit
     Left = 8
     Top = 129
-    Width = 121
+    Width = 128
     Height = 21
-    Mode = nbmCurrency
-    MinValue = 1.000000000000000000
+    ImeName = 'edtProjectCode'
+    ReadOnly = True
     TabOrder = 7
+    OnKeyPress = edtImpostoKeyPress
   end
   object dsBomba: TDataSource
     DataSet = cdsBomba
@@ -189,49 +196,23 @@ inherited frmAbastecimento: TfrmAbastecimento
   end
   object cdsBomba: TClientDataSet
     Aggregates = <>
-    FieldDefs = <
-      item
-        Name = 'project_cod'
-        DataType = ftInteger
-      end
-      item
-        Name = 'name'
-        Attributes = [faRequired]
-        DataType = ftWideString
-        Size = 100
-      end
-      item
-        Name = 'description'
-        Attributes = [faRequired]
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'start_date'
-        Attributes = [faRequired]
-        DataType = ftDate
-      end
-      item
-        Name = 'end_date'
-        Attributes = [faRequired]
-        DataType = ftDate
-      end
-      item
-        Name = 'status'
-        Attributes = [faRequired, faFixed]
-        DataType = ftString
-        Size = 1
-      end>
-    IndexDefs = <>
     Params = <>
-    StoreDefs = True
     Left = 448
-    Top = 80
-    object cdsBombaid_bomba: TIntegerField
-      FieldName = 'id_bomba'
+    Top = 120
+    object cdsBombaID_BOMBA: TIntegerField
+      FieldName = 'ID_BOMBA'
     end
-    object cdsBombadescricao: TStringField
-      FieldName = 'descricao'
+    object cdsBombaID_TANQUE: TIntegerField
+      FieldName = 'ID_TANQUE'
+    end
+    object cdsBombaNUMERO_BOMBA: TIntegerField
+      FieldName = 'NUMERO_BOMBA'
+    end
+    object cdsBombaDESCRICAO: TStringField
+      FieldName = 'DESCRICAO'
+    end
+    object cdsBombaPRECO_LITRO: TCurrencyField
+      FieldName = 'PRECO_LITRO'
     end
   end
 end
