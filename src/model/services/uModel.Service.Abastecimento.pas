@@ -12,6 +12,7 @@ type
   public
     function Fields(): TStrings;
     function CommandSQL(): string;
+    function Report(): TObjectList<TAbastecimento>;
     function FindAll(): TObjectList<TAbastecimento>; overload;
 
     function IsValid(Entity: TAbastecimento; out MessageContext: String): Boolean;
@@ -67,6 +68,11 @@ begin
   Items := AbastecimentoRepository.Fields;
 
   Result := Items;
+end;
+
+function TAbastecimentoService.Report(): TObjectList<TAbastecimento>;
+begin
+  Result:= AbastecimentoRepository.Report();
 end;
 
 function TAbastecimentoService.FindAll(): TObjectList<TAbastecimento>;
@@ -129,7 +135,7 @@ begin
 
   if Entity.QuantidadeLitros <= 0 then
     begin
-      MessageContext := 'Informe uma quantidade de listro maior que zero.';
+      MessageContext := 'Informe uma quantidade de litros maior que zero.';
       Exit();
     end;
 
