@@ -9,6 +9,7 @@ type
   TDataConverterAbastecimento = class(TInterfacedObject, IDataConverter<TAbastecimento>)
   public
     procedure Populate(Source: TObjectList<TAbastecimento>; Target: TDataSet);
+    procedure PopulateReport(Source: TObjectList<TAbastecimento>; Target: TDataSet);
 
     destructor Destroy(); override;
   end;
@@ -43,6 +44,22 @@ begin
       Target.Post;
     end;
   Target.FieldByName('ID_ABASTECIMENTO').ReadOnly := True;
+end;
+
+procedure TDataConverterAbastecimento.PopulateReport(Source: TObjectList<TAbastecimento>;
+  Target: TDataSet);
+var
+  i: Integer;
+begin
+  for i:= 0 to Source.Count -1 do
+    begin
+      Target.Append;
+      Target.FieldByName('DIA').AsDateTime:= Source.Items[i].DataHora;
+      Target.FieldByName('TANQUE').AsString:= Source.Items[i].Bomba.Tanque.Descricao;
+      Target.FieldByName('NUMERO_BOMBA').AsInteger:= Source.Items[i].Bomba.Numero;
+      Target.FieldByName('VALOR').AsCurrency:= Source.Items[i].ValorTotal;
+      Target.Post;
+    end;
 end;
 
 end.
