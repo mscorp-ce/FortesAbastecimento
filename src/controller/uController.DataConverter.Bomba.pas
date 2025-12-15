@@ -9,7 +9,7 @@ type
   TDataConverterBomba = class(TInterfacedObject, IDataConverter<TBomba>)
   public
     procedure Populate(Source: TObjectList<TBomba>; Target: TDataSet);
-
+    procedure PopulateReport(Source: TObjectList<TBomba>; Target: TDataSet);
     destructor Destroy(); override;
   end;
 
@@ -40,6 +40,11 @@ begin
       Target.Post;
     end;
   Target.FieldByName('ID_BOMBA').ReadOnly := True;
+end;
+
+procedure TDataConverterBomba.PopulateReport(Source: TObjectList<TBomba>; Target: TDataSet);
+begin
+
 end;
 
 end.
