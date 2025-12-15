@@ -63,6 +63,12 @@ procedure TfrmConsultaAbastecimento.Alter();
 begin
   inherited;
 
+  if cdsConsult.IsEmpty then
+    begin
+      ShowMessage('Não há registros a serem alterdos.');
+      Exit();
+    end;
+
   State:= dsEdit;
 
   ExecuteFrom(cdsConsult.FieldByName('ID_ABASTECIMENTO').AsInteger);

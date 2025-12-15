@@ -6,9 +6,7 @@ inherited frmConsultaAbastecimento: TfrmConsultaAbastecimento
     StyleElements = [seFont, seBorder]
     inherited spbAlter: TSpeedButton
       Left = 6
-      Top = 132
       ExplicitLeft = 6
-      ExplicitTop = 132
     end
   end
   inherited grdConsult: TDBGrid
