@@ -33,7 +33,8 @@ uses
   uView.FormConsultaAbastecimento in 'view\consult\uView.FormConsultaAbastecimento.pas' {frmConsultaAbastecimento},
   uController.RootBomba in 'controller\uController.RootBomba.pas',
   uModel.Service.Bomba in 'model\services\uModel.Service.Bomba.pas',
-  uController.DataConverter.Bomba in 'controller\uController.DataConverter.Bomba.pas';
+  uController.DataConverter.Bomba in 'controller\uController.DataConverter.Bomba.pas',
+  uView.Rel.Abastecimentos in 'view\uView.Rel.Abastecimentos.pas' {frmRelAbastecimentos};
 
 {$R *.res}
 
