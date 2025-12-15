@@ -59,7 +59,7 @@ begin
 
   DataSet.CreateDataSet();
 
-  LAbastecimentos := LControllerAbastecimento.Report();
+  LAbastecimentos := LControllerAbastecimento.Report(0, 0);
   try
     LDataConverter:= TDataConverterAbastecimento.Create();
     LDataConverter.PopulateReport(LAbastecimentos, DataSet);
@@ -77,7 +77,6 @@ var
 begin
   LfrmRelAbastecimentos:= TfrmRelAbastecimentos.Create(Self);
   try
-    PrepareReport(LfrmRelAbastecimentos.cdsAbastecimentos);
     LfrmRelAbastecimentos.qryAbastecimentos.Open();
     LfrmRelAbastecimentos.TotalDia := 0;
     LfrmRelAbastecimentos.TotalGeral := 0;
