@@ -8,10 +8,14 @@ uses
 
 type
   TAbastecimentoRepository = class(TInterfacedObject, IRepository<TAbastecimento>)
+  private
+    procedure PopulateListEntitieReport(var List: TObjectList<TAbastecimento>; const Statement: IStatement);
   public
     function Fields(): TStrings;
     procedure SetStatement(Statement: IStatement; Entity: TAbastecimento);
     procedure SetProperty(Statement: IStatement; Entity: TAbastecimento);
+    procedure SetPropertyReport(Statement: IStatement;
+      Entity: TAbastecimento);
     function Save(Entity: TAbastecimento): Boolean;
     function Update(Entity: TAbastecimento): Boolean; overload;
     function DeleteById(Entity: TAbastecimento): Boolean;
@@ -21,6 +25,7 @@ type
     procedure PopulateListEntitie(var List: TObjectList<TAbastecimento>; const Statement: IStatement);
     function CommandSQL(): string;
     function Find(): Integer;
+    function Report(): TObjectList<TAbastecimento>;
     function FindAll(): TObjectList<TAbastecimento>; overload;
     function FindAll(CommadSQL: String): TObjectList<TAbastecimento>; overload;
     function FindAll(CommadSQL: String; Entity: TAbastecimento): TObjectList<TAbastecimento>; overload;
@@ -105,6 +110,29 @@ begin
 
     Result:= List;
 
+  except
+    on Error: EFDDBEngineException do
+      begin
+        raise Exception.Create(TFireDACEngineException.GetMessage(Error));
+      end;
+  end;
+end;
+
+function TAbastecimentoRepository.Report(): TObjectList<TAbastecimento>;
+var
+  Statement: IStatement;
+  List: TObjectList<TAbastecimento>;
+begin
+  try
+    Statement:= TStatementFactory.GetStatement(DataManager);
+    List:= TObjectList<TAbastecimento>.Create;
+
+    Statement.Query.SQL.Clear();
+    Statement.SQL(QUERY_ABASTECIMENTO).Open();
+
+    PopulateListEntitieReport(List, Statement);
+
+    Result:= List;
   except
     on Error: EFDDBEngineException do
       begin
@@ -213,6 +241,24 @@ begin
     end;
 end;
 
+procedure TAbastecimentoRepository.PopulateListEntitieReport(var List: TObjectList<TAbastecimento>;
+  const Statement: IStatement);
+var
+  Abastecimento: TAbastecimento;
+begin
+  Statement.Query.First();
+
+  while not Statement.Query.Eof do
+    begin
+      Abastecimento:= TAbastecimento.Create();
+
+      SetPropertyReport(Statement, Abastecimento);
+
+      List.Add(Abastecimento);
+      Statement.Query.Next();
+    end;
+end;
+
 function TAbastecimentoRepository.Save(Entity: TAbastecimento): Boolean;
 var
   Statement: IStatement;
@@ -256,6 +302,23 @@ begin
     Entity.PrecoLitro := Statement.Query.FieldByName('PRECO_LITRO').AsCurrency;
     Entity.ValorTotal := Statement.Query.FieldByName('VALOR_TOTAL').AsCurrency;
     Entity.Imposto := Statement.Query.FieldByName('IMPOSTO').AsCurrency;
+
+  except
+    on Error: EFDDBEngineException do
+      begin
+        raise Exception.Create(TFireDACEngineException.GetMessage(Error));
+      end;
+  end;
+end;
+
+procedure TAbastecimentoRepository.SetPropertyReport(Statement: IStatement;
+  Entity: TAbastecimento);
+begin
+  try
+    Entity.DataHora := Statement.Query.FieldByName('DIA').AsDateTime;
+    Entity.Bomba.Tanque.Descricao := Statement.Query.FieldByName('TANQUE').AsString;
+    Entity.Bomba.Numero := Statement.Query.FieldByName('NUMERO_BOMBA').AsInteger;
+    Entity.ValorTotal := Statement.Query.FieldByName('VALOR').AsCurrency;
 
   except
     on Error: EFDDBEngineException do
