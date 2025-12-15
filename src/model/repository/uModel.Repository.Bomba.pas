@@ -21,7 +21,7 @@ type
     procedure PopulateListEntitie(var List: TObjectList<TBomba>; const Statement: IStatement);
     function CommandSQL(): string;
     function Find(): Integer;
-    function Report(): TObjectList<TBomba>;
+    function Report(const ADataInicial, ADataFinal: TDateTime): TObjectList<TBomba>;
     function FindAll(): TObjectList<TBomba>; overload;
     function FindAll(CommadSQL: String): TObjectList<TBomba>; overload;
     function FindAll(CommadSQL: String; Entity: TBomba): TObjectList<TBomba>; overload;
@@ -96,7 +96,7 @@ begin
   end;
 end;
 
-function TBombaRepository.Report(): TObjectList<TBomba>;
+function TBombaRepository.Report(const ADataInicial, ADataFinal: TDateTime): TObjectList<TBomba>;
 begin
   Result := nil;
 end;
