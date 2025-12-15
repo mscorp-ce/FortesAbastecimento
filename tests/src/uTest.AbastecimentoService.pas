@@ -30,13 +30,22 @@ type
     procedure IsValid_DeveFalhar_QuandoQuantidadeZero;
 
     [Test]
+    procedure IsValid_DeveFalhar_QuandoImpostoInvalido;
+
+    [Test]
     procedure Save_DeveSalvar_QuandoEntidadeValida;
 
     [Test]
     procedure Save_DeveLancarExcecao_QuandoEntidadeInvalida;
+
+    [Test]
+    procedure Save_DeveLancarExcecao_QuandoImpostoInvalido;
   end;
 
 implementation
+
+uses
+  System.Math;
 
 procedure TTestAbastecimentoService.Setup;
 begin
@@ -66,6 +75,31 @@ begin
   Assert.AreEqual('Bomba invalida.', Msg);
 end;
 
+procedure TTestAbastecimentoService.IsValid_DeveFalhar_QuandoImpostoInvalido;
+var
+  Msg: string;
+  LImpostoEsperado: Currency;
+begin
+  FEntity.Imposto := 5; // Define um imposto incorreto (deveria ser 13% de 100 = 13)
+
+  // Verifica se o método retorna False
+  Assert.IsFalse(FService.IsValid(FEntity, Msg));
+
+  // Verifica a mensagem de erro
+  LImpostoEsperado := RoundTo(FEntity.ValorTotal * 0.13, -2);
+  Assert.AreEqual(
+    Format('O imposto deve ser 13%% do valor total. Valor esperado: %.2f', [LImpostoEsperado]),
+    Msg
+  );
+{var
+  Msg: string;
+begin
+  FEntity.Imposto := 5;
+
+  Assert.IsFalse(FService.IsValid(FEntity, Msg));
+  Assert.AreEqual(Format('O imposto deve ser 13%% do valor total. Valor esperado: %.2f', [RoundTo(FEntity.ValorTotal * 0.13, -2)]), Msg);}
+end;
+
 procedure TTestAbastecimentoService.IsValid_DeveFalhar_QuandoQuantidadeZero;
 var
   Msg: string;
@@ -90,6 +124,19 @@ begin
     FService.Save(FEntity);
   end,
   EServiceAbastecimentoBusinessException
+  );
+end;
+
+procedure TTestAbastecimentoService.Save_DeveLancarExcecao_QuandoImpostoInvalido;
+begin
+  FEntity.Imposto := 5;
+
+  Assert.WillRaise(
+    procedure
+    begin
+      FService.Save(FEntity);
+    end,
+    EServiceAbastecimentoBusinessException
   );
 end;
 
