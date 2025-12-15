@@ -174,6 +174,10 @@
         <DCCReference Include="controller\uController.RootBomba.pas"/>
         <DCCReference Include="model\services\uModel.Service.Bomba.pas"/>
         <DCCReference Include="controller\uController.DataConverter.Bomba.pas"/>
+        <DCCReference Include="view\uView.Rel.Abastecimentos.pas">
+            <Form>frmRelAbastecimentos</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
