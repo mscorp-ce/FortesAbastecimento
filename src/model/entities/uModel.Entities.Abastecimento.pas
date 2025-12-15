@@ -15,10 +15,11 @@ type
     FPrecoLitro: Currency;
     FValorTotal: Currency;
     FImposto: Currency;
-    function GetImposto: Currency;
   public
     constructor Create();
     destructor Destroy(); override;
+
+    function GetImposto: Currency;
 
     property Id: Integer read FId write FId;
     property Bomba: TBomba read FBomba write FBomba;
