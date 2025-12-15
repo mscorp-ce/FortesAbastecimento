@@ -11,6 +11,7 @@ const
     '     FROM ABASTECIMENTOS ABA ' + sLineBreak +
     '     JOIN BOMBAS BOM ON ABA.ID_BOMBA = BOM.ID_BOMBA ' + sLineBreak +
     '     JOIN TANQUES TAN ON BOM.ID_TANQUE = TAN.ID_TANQUE ' + sLineBreak +
+    '     @CLAUSE_WHERE@ ' + sLineBreak +
     ' GROUP BY CAST(ABA.DATA_HORA AS DATE), ' + sLineBreak +
     '          TAN.DESCRICAO, ' + sLineBreak +
     '          BOM.NUMERO_BOMBA ' + sLineBreak +
