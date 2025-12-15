@@ -13,6 +13,7 @@ type
     function Fields(): TStrings;
     function CommandSQL(): String;
     function FindAll(): TObjectList<TAbastecimento>; overload;
+    function Report(): TObjectList<TAbastecimento>;
 
     function IsValid(Entity: TAbastecimento; out MessageContext: String): Boolean;
     function Save(Entity: TAbastecimento): Boolean;
@@ -67,6 +68,11 @@ end;
 function TControllerAbastecimento.Find(): Integer;
 begin
   Result:= AbastecimentoService.Find();
+end;
+
+function TControllerAbastecimento.Report(): TObjectList<TAbastecimento>;
+begin
+  Result:= AbastecimentoService.Report();
 end;
 
 function TControllerAbastecimento.FindAll: TObjectList<TAbastecimento>;
