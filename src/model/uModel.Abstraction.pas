@@ -91,11 +91,13 @@ type
   IController<T: class> = interface(IPersistence<T>)
   ['{0C7B72B1-76BA-4463-BA7F-FAC7A90470EC}']
     function IsValid(Entity: T; out MessageContext: String): Boolean;
+    function Report(): TObjectList<T>;
   end;
 
   IService<T: class> = interface(IPersistence<T>)
   ['{5E47E4E7-D251-4AD9-BA5E-00B5DBAAD58C}']
     function IsValid(Entity: T; out MessageContext: String): Boolean;
+    function Report(): TObjectList<T>;
   end;
 
   IDomain<T: class> = interface(IService<T>)
@@ -109,11 +111,13 @@ type
     procedure SetProperty(Statement: IStatement; Entity: T);
     procedure PopulateListEntitie(var List: TObjectList<T>; const Statement: IStatement);
     function FindAll(Id: Integer): TObjectList<T>; overload;
+    function Report(): TObjectList<T>;
   end;
 
   IDataConverter<T: class> = interface
   ['{D27C0689-A569-4DC3-B1B1-3FA4233B0E5C}']
     procedure Populate(Source: TObjectList<T>; Target: TDataSet);
+    procedure PopulateReport(Source: TObjectList<T>; Target: TDataSet);
   end;
 
 var
