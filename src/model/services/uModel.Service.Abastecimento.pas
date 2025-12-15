@@ -104,6 +104,7 @@ function TAbastecimentoService.IsValid(Entity: TAbastecimento; out MessageContex
 var
   LBomba: TBomba;
   LBombaRepository: IRepository<TBomba>;
+  LImpostoCalculado: Currency;
 begin
   Result:= False;
 
@@ -144,6 +145,14 @@ begin
       MessageContext := 'Informe um valor total que zero.';
       Exit();
     end;
+
+  LImpostoCalculado := Entity.GetImposto();
+
+  if Abs(Entity.Imposto - LImpostoCalculado) > 0.009 then
+  begin
+    MessageContext := Format('O imposto deve ser 13%% do valor total. Valor esperado: %.2f', [LImpostoCalculado]);
+    Exit();
+  end;
 
   Result := True;
 end;
