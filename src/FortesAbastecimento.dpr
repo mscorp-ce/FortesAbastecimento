@@ -34,7 +34,8 @@ uses
   uController.RootBomba in 'controller\uController.RootBomba.pas',
   uModel.Service.Bomba in 'model\services\uModel.Service.Bomba.pas',
   uController.DataConverter.Bomba in 'controller\uController.DataConverter.Bomba.pas',
-  uView.Rel.Abastecimentos in 'view\uView.Rel.Abastecimentos.pas' {frmRelAbastecimentos};
+  uView.Rel.Abastecimentos in 'view\uView.Rel.Abastecimentos.pas' {frmRelAbastecimentos},
+  uView.ContextoAbastecimento in 'view\uView.ContextoAbastecimento.pas' {frmContextoAbastecimento};
 
 {$R *.res}
 
