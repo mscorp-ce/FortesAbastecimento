@@ -25,7 +25,7 @@ type
     procedure PopulateListEntitie(var List: TObjectList<TAbastecimento>; const Statement: IStatement);
     function CommandSQL(): string;
     function Find(): Integer;
-    function Report(): TObjectList<TAbastecimento>;
+    function Report(const ADataInicial, ADataFinal: TDateTime): TObjectList<TAbastecimento>;
     function FindAll(): TObjectList<TAbastecimento>; overload;
     function FindAll(CommadSQL: String): TObjectList<TAbastecimento>; overload;
     function FindAll(CommadSQL: String; Entity: TAbastecimento): TObjectList<TAbastecimento>; overload;
@@ -118,17 +118,37 @@ begin
   end;
 end;
 
-function TAbastecimentoRepository.Report(): TObjectList<TAbastecimento>;
+function TAbastecimentoRepository.Report(const ADataInicial, ADataFinal: TDateTime): TObjectList<TAbastecimento>;
 var
   Statement: IStatement;
   List: TObjectList<TAbastecimento>;
+  LSQL: String;
+  LNewReplace: String;
 begin
   try
     Statement:= TStatementFactory.GetStatement(DataManager);
     List:= TObjectList<TAbastecimento>.Create;
 
     Statement.Query.SQL.Clear();
-    Statement.SQL(QUERY_ABASTECIMENTO).Open();
+
+    if (ADataInicial > 0) and (ADataFinal > 0) then
+      LNewReplace:= ' WHERE ABA.DATA_HORA >= :DATA_INICIAL AND ABA.DATA_HORA <= :DATA_FINAL '
+    else
+      LNewReplace:= ' ';
+
+    LSQL:= StringReplace(QUERY_ABASTECIMENTO ,'@CLAUSE_WHERE@', LNewReplace, [rfReplaceAll]);
+
+    Statement.Query.SQL.Add(QUERY_ABASTECIMENTO);
+
+    if LNewReplace <> EmptyStr then
+      begin
+        Statement.Query.Params.ParamByName('DATA_INICIAL').AsDate := ADataInicial;
+        Statement.Query.Params.ParamByName('DATA_FINAL').AsDate := ADataFinal;
+      end;
+
+    Statement.Query.Open();
+
+    //Statement.SQL(QUERY_ABASTECIMENTO).Open();
 
     PopulateListEntitieReport(List, Statement);
 
