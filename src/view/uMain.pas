@@ -18,10 +18,10 @@ type
     procedure mmiAbastecimentoClick(Sender: TObject);
     procedure mmiAbastecimentosClick(Sender: TObject);
   private
-    procedure PrepareReport(DataSet: TClientDataSet);
     { Private declarations }
   public
     { Public declarations }
+    procedure PrepareReport(DataSet: TClientDataSet);
   end;
 
 var

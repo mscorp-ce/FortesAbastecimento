@@ -4,7 +4,7 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ComCtrls, Vcl.StdCtrls,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ComCtrls, Vcl.StdCtrls, FireDAC.Stan.Param,
   Datasnap.DBClient;
 
 type
@@ -20,11 +20,11 @@ type
     procedure btnFecharClick(Sender: TObject);
   private
     { Private declarations }
-    procedure PrepareReport(DataSet: TClientDataSet);
     procedure Executar();
     procedure Fechar();
   public
     { Public declarations }
+    procedure PrepareReport(DataSet: TClientDataSet);
   end;
 
 var
