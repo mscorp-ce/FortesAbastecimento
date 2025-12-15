@@ -12,6 +12,7 @@ type
   public
     function Fields(): TStrings;
     function CommandSQL(): string;
+    function Report(): TObjectList<TBomba>;
     function FindAll(): TObjectList<TBomba>; overload;
 
     function IsValid(Entity: TBomba; out MessageContext: String): Boolean;
@@ -66,6 +67,11 @@ begin
   Items := BombaRepository.Fields;
 
   Result := Items;
+end;
+
+function TBombaService.Report(): TObjectList<TBomba>;
+begin
+  Result:= BombaRepository.Report();
 end;
 
 function TBombaService.FindAll(): TObjectList<TBomba>;
