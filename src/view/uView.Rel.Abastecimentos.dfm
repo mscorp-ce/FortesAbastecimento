@@ -1,0 +1,326 @@
+object frmRelAbastecimentos: TfrmRelAbastecimentos
+  Left = 0
+  Top = 0
+  Caption = 'frmRelAbastecimentos'
+  ClientHeight = 441
+  ClientWidth = 850
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -12
+  Font.Name = 'Segoe UI'
+  Font.Style = []
+  OnClose = FormClose
+  TextHeight = 15
+  object Report: TRLReport
+    Left = -8
+    Top = 0
+    Width = 794
+    Height = 1123
+    DataSource = dsAbastecimentos
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -13
+    Font.Name = 'Arial'
+    Font.Style = []
+    object bdCabecalho: TRLBand
+      Left = 38
+      Top = 38
+      Width = 718
+      Height = 80
+      BandType = btHeader
+      object RLSystemInfo1: TRLSystemInfo
+        Left = 560
+        Top = 16
+        Width = 132
+        Height = 16
+        Info = itFullDate
+        Text = ''
+      end
+      object RLLabel1: TRLLabel
+        Left = 173
+        Top = 28
+        Width = 372
+        Height = 24
+        Align = faCenter
+        Caption = 'RELAT'#211'RIO DE ABASTECIMENTOS'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -21
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object RLSystemInfo2: TRLSystemInfo
+        Left = 608
+        Top = 56
+        Width = 84
+        Height = 16
+        Info = itPageNumber
+        Text = 'P'#225'gina: '
+      end
+      object RLLabel2: TRLLabel
+        Left = 16
+        Top = 16
+        Width = 86
+        Height = 16
+        Caption = 'Posto ABC Ltda.'
+      end
+      object RLSystemInfo3: TRLSystemInfo
+        Left = 16
+        Top = 56
+        Width = 96
+        Height = 16
+        Info = itHour
+        Text = 'Hora: '
+      end
+    end
+    object RLGroup1: TRLGroup
+      Left = 38
+      Top = 118
+      Width = 718
+      Height = 83
+      DataFields = 'DIA'
+      object RLBand1: TRLBand
+        Left = 0
+        Top = 0
+        Width = 718
+        Height = 24
+        BandType = btHeader
+        Color = clAppWorkSpace
+        ParentColor = False
+        Transparent = False
+        object RLLabel7: TRLLabel
+          Left = 3
+          Top = 4
+          Width = 58
+          Height = 16
+          Caption = 'Data Dia:'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          ParentFont = False
+        end
+        object RLDBText5: TRLDBText
+          Left = 76
+          Top = 4
+          Width = 39
+          Height = 16
+          DataField = 'DIA'
+          DataSource = dsAbastecimentos
+          Text = ''
+        end
+      end
+      object RLBand2: TRLBand
+        Left = 0
+        Top = 24
+        Width = 718
+        Height = 24
+        BeforePrint = RLBand2BeforePrint
+        object RLLabel3: TRLLabel
+          Left = 3
+          Top = 4
+          Width = 25
+          Height = 16
+          Caption = 'Dia'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          ParentFont = False
+          Transparent = False
+        end
+        object RLDBText1: TRLDBText
+          Left = 31
+          Top = 4
+          Width = 82
+          Height = 16
+          DataField = 'DIA'
+          DataSource = dsAbastecimentos
+          Text = ''
+          Transparent = False
+        end
+        object RLLabel4: TRLLabel
+          Left = 116
+          Top = 4
+          Width = 54
+          Height = 16
+          Caption = 'Tanque'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          ParentFont = False
+          Transparent = False
+        end
+        object RLDBText2: TRLDBText
+          Left = 174
+          Top = 4
+          Width = 156
+          Height = 16
+          DataField = 'TANQUE'
+          DataSource = dsAbastecimentos
+          Text = ''
+          Transparent = False
+        end
+        object RLLabel5: TRLLabel
+          Left = 333
+          Top = 4
+          Width = 49
+          Height = 16
+          Caption = 'Bomba'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          ParentFont = False
+          Transparent = False
+        end
+        object RLDBText3: TRLDBText
+          Left = 385
+          Top = 4
+          Width = 174
+          Height = 16
+          DataField = 'NUMERO_BOMBA'
+          DataSource = dsAbastecimentos
+          Text = ''
+          Transparent = False
+        end
+        object RLLabel6: TRLLabel
+          Left = 561
+          Top = 4
+          Width = 38
+          Height = 16
+          Caption = 'Valor'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          ParentFont = False
+          Transparent = False
+        end
+        object RLDBText4: TRLDBText
+          Left = 670
+          Top = 0
+          Width = 48
+          Height = 24
+          Align = faRight
+          DataField = 'VALOR'
+          DataSource = dsAbastecimentos
+          Text = ''
+          Transparent = False
+        end
+      end
+      object RLBand3: TRLBand
+        Left = 0
+        Top = 48
+        Width = 718
+        Height = 26
+        BandType = btSummary
+        BeforePrint = RLBand3BeforePrint
+        object rlTotal: TRLLabel
+          Left = 600
+          Top = 0
+          Width = 118
+          Height = 26
+          Align = faRight
+          Alignment = taRightJustify
+          Caption = 'Total por Dia (R$):'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          ParentFont = False
+        end
+      end
+    end
+    object RLBand4: TRLBand
+      Left = 38
+      Top = 201
+      Width = 718
+      Height = 32
+      BandType = btSummary
+      BeforePrint = RLBand4BeforePrint
+      object rlTotalGeral: TRLLabel
+        Left = 600
+        Top = 0
+        Width = 118
+        Height = 32
+        Align = faRight
+        Alignment = taRightJustify
+        Caption = 'Total por Dia (R$):'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+    end
+  end
+  object dsAbastecimentos: TDataSource
+    DataSet = qryAbastecimentos
+    Left = 40
+    Top = 336
+  end
+  object qryAbastecimentos: TFDQuery
+    Connection = xConnection
+    SQL.Strings = (
+      'SELECT CAST(ABA.DATA_HORA AS DATE) AS DIA,'
+      '       TAN.DESCRICAO AS TANQUE,'
+      '       BOM.NUMERO_BOMBA,'
+      '       SUM(ABA.VALOR_TOTAL) AS VALOR'
+      '       FROM ABASTECIMENTOS ABA'
+      '       JOIN BOMBAS BOM ON ABA.ID_BOMBA = BOM.ID_BOMBA'
+      '       JOIN TANQUES TAN ON BOM.ID_TANQUE = TAN.ID_TANQUE'
+      '   GROUP BY CAST(ABA.DATA_HORA AS DATE),'
+      '            TAN.DESCRICAO,'
+      '            BOM.NUMERO_BOMBA'
+      '   ORDER BY DIA, TANQUE, NUMERO_BOMBA;')
+    Left = 150
+    Top = 336
+  end
+  object xConnection: TFDConnection
+    Params.Strings = (
+      'DriverName=FB'
+      'Server=localhost'
+      'Port=3050'
+      'Database=C:\FortesAbastecimento\Data\FORTESABASTECIMENTO.FDB'
+      'User_Name=SYSDBA'
+      'Password=masterkey'
+      'DriverID=FB')
+    LoginPrompt = False
+    Left = 254
+    Top = 336
+  end
+  object xDriverLink: TFDPhysFBDriverLink
+    VendorLib = 'D:\Program Files (x86)\Firebird\Firebird_2_5\bin\fbclient.dll'
+    Left = 332
+    Top = 336
+  end
+  object cdsAbastecimentos: TClientDataSet
+    Aggregates = <>
+    Params = <>
+    Left = 416
+    Top = 224
+    object cdsAbastecimentosDIA: TDateField
+      FieldName = 'DIA'
+    end
+    object cdsAbastecimentosTANQUE: TStringField
+      FieldName = 'TANQUE'
+    end
+    object cdsAbastecimentosNUMERO_BOMBA: TIntegerField
+      FieldName = 'NUMERO_BOMBA'
+    end
+    object cdsAbastecimentosVALOR: TCurrencyField
+      FieldName = 'VALOR'
+    end
+  end
+end
