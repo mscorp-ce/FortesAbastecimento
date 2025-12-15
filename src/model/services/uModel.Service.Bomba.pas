@@ -12,7 +12,7 @@ type
   public
     function Fields(): TStrings;
     function CommandSQL(): string;
-    function Report(): TObjectList<TBomba>;
+    function Report(const ADataInicial, ADataFinal: TDateTime): TObjectList<TBomba>;
     function FindAll(): TObjectList<TBomba>; overload;
 
     function IsValid(Entity: TBomba; out MessageContext: String): Boolean;
@@ -69,9 +69,9 @@ begin
   Result := Items;
 end;
 
-function TBombaService.Report(): TObjectList<TBomba>;
+function TBombaService.Report(const ADataInicial, ADataFinal: TDateTime): TObjectList<TBomba>;
 begin
-  Result:= BombaRepository.Report();
+  Result:= BombaRepository.Report(ADataInicial, ADataFinal);
 end;
 
 function TBombaService.FindAll(): TObjectList<TBomba>;
