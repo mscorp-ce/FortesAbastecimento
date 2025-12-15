@@ -28,6 +28,7 @@ object frmMain: TfrmMain
       Caption = 'Relat'#243'rio'
       object mmiAbastecimentos: TMenuItem
         Caption = 'Abastecimentos'
+        OnClick = mmiAbastecimentosClick
       end
     end
     object mmiSair: TMenuItem
