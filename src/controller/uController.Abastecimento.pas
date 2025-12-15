@@ -13,7 +13,7 @@ type
     function Fields(): TStrings;
     function CommandSQL(): String;
     function FindAll(): TObjectList<TAbastecimento>; overload;
-    function Report(): TObjectList<TAbastecimento>;
+    function Report(const ADataInicial, ADataFinal: TDateTime): TObjectList<TAbastecimento>;
 
     function IsValid(Entity: TAbastecimento; out MessageContext: String): Boolean;
     function Save(Entity: TAbastecimento): Boolean;
@@ -70,9 +70,9 @@ begin
   Result:= AbastecimentoService.Find();
 end;
 
-function TControllerAbastecimento.Report(): TObjectList<TAbastecimento>;
+function TControllerAbastecimento.Report(const ADataInicial, ADataFinal: TDateTime): TObjectList<TAbastecimento>;
 begin
-  Result:= AbastecimentoService.Report();
+  Result:= AbastecimentoService.Report(ADataInicial, ADataFinal);
 end;
 
 function TControllerAbastecimento.FindAll: TObjectList<TAbastecimento>;
