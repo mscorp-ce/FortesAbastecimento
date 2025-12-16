@@ -1,20 +1,60 @@
 object frmRelAbastecimentos: TfrmRelAbastecimentos
   Left = 0
   Top = 0
-  Caption = 'frmRelAbastecimentos'
-  ClientHeight = 441
-  ClientWidth = 850
+  Caption = 'Relat'#243'rio de Abastecimentos'
+  ClientHeight = 95
+  ClientWidth = 332
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  Position = poScreenCenter
   OnClose = FormClose
   TextHeight = 15
+  object lblDataIni: TLabel
+    Left = 4
+    Top = 6
+    Width = 64
+    Height = 13
+    Caption = 'Data Inicial'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object lblEntre: TLabel
+    Left = 97
+    Top = 28
+    Width = 7
+    Height = 13
+    Caption = 'a'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object lblDataFinal: TLabel
+    Left = 110
+    Top = 6
+    Width = 56
+    Height = 13
+    Caption = 'Data Final'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
   object Report: TRLReport
-    Left = -8
-    Top = 0
+    Left = 272
+    Top = 144
     Width = 794
     Height = 1123
     DataSource = dsAbastecimentos
@@ -119,30 +159,6 @@ object frmRelAbastecimentos: TfrmRelAbastecimentos
         Width = 718
         Height = 24
         BeforePrint = RLBand2BeforePrint
-        object RLLabel3: TRLLabel
-          Left = 3
-          Top = 4
-          Width = 25
-          Height = 16
-          Caption = 'Dia'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = [fsBold]
-          ParentFont = False
-          Transparent = False
-        end
-        object RLDBText1: TRLDBText
-          Left = 31
-          Top = 4
-          Width = 82
-          Height = 16
-          DataField = 'DIA'
-          DataSource = dsAbastecimentos
-          Text = ''
-          Transparent = False
-        end
         object RLLabel4: TRLLabel
           Left = 116
           Top = 4
@@ -264,6 +280,42 @@ object frmRelAbastecimentos: TfrmRelAbastecimentos
         ParentFont = False
       end
     end
+  end
+  object dtpDataIni: TDateTimePicker
+    Left = 4
+    Top = 25
+    Width = 87
+    Height = 21
+    Date = 46006.000000000000000000
+    Time = 0.897409675926610400
+    TabOrder = 1
+  end
+  object dtpDataFinal: TDateTimePicker
+    Left = 110
+    Top = 25
+    Width = 87
+    Height = 21
+    Date = 46006.000000000000000000
+    Time = 0.897409675926610400
+    TabOrder = 2
+  end
+  object btnExecutar: TButton
+    Left = 168
+    Top = 58
+    Width = 75
+    Height = 25
+    Caption = 'Executar'
+    TabOrder = 3
+    OnClick = btnExecutarClick
+  end
+  object btnFechar: TButton
+    Left = 249
+    Top = 58
+    Width = 75
+    Height = 25
+    Caption = 'Fechar'
+    TabOrder = 4
+    OnClick = btnFecharClick
   end
   object dsAbastecimentos: TDataSource
     DataSet = qryAbastecimentos
