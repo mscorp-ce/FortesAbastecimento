@@ -30,9 +30,8 @@ var
 implementation
 
 uses
-  uView.FormConsultaAbastecimento, uView.Rel.Abastecimentos,
-  uModel.Abstraction, uModel.Entities.Abastecimento, uController.Abastecimento,
-  System.Generics.Collections, uController.DataConverter.Abastecimento;
+  uView.FormConsultaAbastecimento, uView.Rel.Abastecimentos, uModel.Abstraction, uModel.Entities.Abastecimento,
+  uController.Abastecimento, System.Generics.Collections, uController.DataConverter.Abastecimento;
 
 {$R *.dfm}
 
@@ -77,10 +76,8 @@ var
 begin
   LfrmRelAbastecimentos:= TfrmRelAbastecimentos.Create(Self);
   try
-    LfrmRelAbastecimentos.qryAbastecimentos.Open();
-    LfrmRelAbastecimentos.TotalDia := 0;
-    LfrmRelAbastecimentos.TotalGeral := 0;
-    LfrmRelAbastecimentos.Report.Preview();
+
+    LfrmRelAbastecimentos.ShowModal();
 
   finally
     FreeAndNil(LfrmRelAbastecimentos);
