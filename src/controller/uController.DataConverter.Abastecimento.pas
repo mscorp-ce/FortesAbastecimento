@@ -58,6 +58,7 @@ begin
       Target.FieldByName('TANQUE').AsString:= Source.Items[i].Bomba.Tanque.Descricao;
       Target.FieldByName('NUMERO_BOMBA').AsInteger:= Source.Items[i].Bomba.Numero;
       Target.FieldByName('VALOR').AsCurrency:= Source.Items[i].ValorTotal;
+      Target.FieldByName('IMPOSTO').AsCurrency:= Source.Items[i].Imposto;
       Target.Post;
     end;
 end;
