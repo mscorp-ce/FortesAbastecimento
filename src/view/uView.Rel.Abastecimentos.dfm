@@ -2,8 +2,8 @@ object frmRelAbastecimentos: TfrmRelAbastecimentos
   Left = 0
   Top = 0
   Caption = 'Relat'#243'rio de Abastecimentos'
-  ClientHeight = 95
-  ClientWidth = 332
+  ClientHeight = 90
+  ClientWidth = 339
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -11,7 +11,6 @@ object frmRelAbastecimentos: TfrmRelAbastecimentos
   Font.Name = 'Segoe UI'
   Font.Style = []
   Position = poScreenCenter
-  OnClose = FormClose
   TextHeight = 15
   object lblDataIni: TLabel
     Left = 4
@@ -53,8 +52,8 @@ object frmRelAbastecimentos: TfrmRelAbastecimentos
     ParentFont = False
   end
   object Report: TRLReport
-    Left = 272
-    Top = 144
+    Left = 200
+    Top = 160
     Width = 794
     Height = 1123
     DataSource = dsAbastecimentos
@@ -301,7 +300,7 @@ object frmRelAbastecimentos: TfrmRelAbastecimentos
   end
   object btnExecutar: TButton
     Left = 168
-    Top = 58
+    Top = 52
     Width = 75
     Height = 25
     Caption = 'Executar'
@@ -310,7 +309,7 @@ object frmRelAbastecimentos: TfrmRelAbastecimentos
   end
   object btnFechar: TButton
     Left = 249
-    Top = 58
+    Top = 52
     Width = 75
     Height = 25
     Caption = 'Fechar'
@@ -318,50 +317,15 @@ object frmRelAbastecimentos: TfrmRelAbastecimentos
     OnClick = btnFecharClick
   end
   object dsAbastecimentos: TDataSource
-    DataSet = qryAbastecimentos
+    DataSet = cdsAbastecimentos
     Left = 40
-    Top = 336
-  end
-  object qryAbastecimentos: TFDQuery
-    Connection = xConnection
-    SQL.Strings = (
-      'SELECT CAST(ABA.DATA_HORA AS DATE) AS DIA,'
-      '       TAN.DESCRICAO AS TANQUE,'
-      '       BOM.NUMERO_BOMBA,'
-      '       SUM(ABA.VALOR_TOTAL) AS VALOR'
-      '       FROM ABASTECIMENTOS ABA'
-      '       JOIN BOMBAS BOM ON ABA.ID_BOMBA = BOM.ID_BOMBA'
-      '       JOIN TANQUES TAN ON BOM.ID_TANQUE = TAN.ID_TANQUE'
-      '   GROUP BY CAST(ABA.DATA_HORA AS DATE),'
-      '            TAN.DESCRICAO,'
-      '            BOM.NUMERO_BOMBA'
-      '   ORDER BY DIA, TANQUE, NUMERO_BOMBA;')
-    Left = 150
-    Top = 336
-  end
-  object xConnection: TFDConnection
-    Params.Strings = (
-      'DriverName=FB'
-      'Server=localhost'
-      'Port=3050'
-      'Database=C:\FortesAbastecimento\Data\FORTESABASTECIMENTO.FDB'
-      'User_Name=SYSDBA'
-      'Password=masterkey'
-      'DriverID=FB')
-    LoginPrompt = False
-    Left = 254
-    Top = 336
-  end
-  object xDriverLink: TFDPhysFBDriverLink
-    VendorLib = 'D:\Program Files (x86)\Firebird\Firebird_2_5\bin\fbclient.dll'
-    Left = 332
     Top = 336
   end
   object cdsAbastecimentos: TClientDataSet
     Aggregates = <>
     Params = <>
-    Left = 416
-    Top = 224
+    Left = 152
+    Top = 336
     object cdsAbastecimentosDIA: TDateField
       FieldName = 'DIA'
     end

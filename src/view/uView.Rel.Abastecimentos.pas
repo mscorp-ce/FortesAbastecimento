@@ -4,17 +4,11 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics, Vcl.Controls,
-  Vcl.Forms, Vcl.Dialogs, Data.DB, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error,
-  FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, FireDAC.Comp.DataSet,
-  FireDAC.Comp.Client, FireDAC.UI.Intf, FireDAC.Stan.Def, FireDAC.Stan.Pool, FireDAC.Phys, FireDAC.Phys.FB,
-  FireDAC.Phys.FBDef, FireDAC.VCLUI.Wait, RLReport, FireDAC.Phys.IBBase, Datasnap.DBClient, Vcl.StdCtrls, Vcl.ComCtrls;
+  Vcl.Forms, Vcl.Dialogs, Data.DB, RLReport, Datasnap.DBClient, Vcl.StdCtrls, Vcl.ComCtrls;
 
 type
   TfrmRelAbastecimentos = class(TForm)
     dsAbastecimentos: TDataSource;
-    qryAbastecimentos: TFDQuery;
-    xConnection: TFDConnection;
-    xDriverLink: TFDPhysFBDriverLink;
     cdsAbastecimentos: TClientDataSet;
     cdsAbastecimentosDIA: TDateField;
     cdsAbastecimentosTANQUE: TStringField;
@@ -52,7 +46,6 @@ type
     procedure RLBand2BeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure RLBand3BeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure RLBand4BeforePrint(Sender: TObject; var PrintIt: Boolean);
-    procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btnExecutarClick(Sender: TObject);
     procedure btnFecharClick(Sender: TObject);
   private
@@ -61,7 +54,8 @@ type
     FTotalGeral: Double;
     procedure SetTotalDia(const Value: Double);
     procedure SetTotalGeral(const Value: Double);
-    procedure Executar;
+    procedure PrepareReport(DataSet: TClientDataSet);
+    procedure Executar();
   public
     { Public declarations }
     property TotalDia: Double read FTotalDia write SetTotalDia;
@@ -74,21 +68,16 @@ var
 implementation
 
 uses
-  uModel.Repository.ConstsStatement.Abastecimento;
+  uModel.Abstraction, uModel.Entities.Abastecimento, uController.Abastecimento,
+  uController.DataConverter.Abastecimento, System.Generics.Collections;
 
 {$R *.dfm}
-
-procedure TfrmRelAbastecimentos.FormClose(Sender: TObject; var Action: TCloseAction);
-begin
-  qryAbastecimentos.Close();
-  xConnection.Close();
-end;
 
 procedure TfrmRelAbastecimentos.RLBand2BeforePrint(Sender: TObject; var PrintIt: Boolean);
 var
   Valor: Double;
 begin
-  Valor := qryAbastecimentos.FieldByName('VALOR').AsFloat;
+  Valor := cdsAbastecimentos.FieldByName('VALOR').AsFloat;
 
   FTotalDia := FTotalDia + Valor;
   FTotalGeral := FTotalGeral + Valor;
@@ -119,6 +108,12 @@ end;
 
 procedure TfrmRelAbastecimentos.btnExecutarClick(Sender: TObject);
 begin
+  if (dtpDataIni.Date > dtpDataFinal.Date) then
+    begin
+      ShowMessage('Informe um período válido, a data inicial não pode ser maior que a data final');
+      Exit();
+    end;
+
   Executar();
 end;
 
@@ -127,33 +122,35 @@ begin
   Close();
 end;
 
-procedure TfrmRelAbastecimentos.Executar();
+procedure TfrmRelAbastecimentos.PrepareReport(DataSet: TClientDataSet);
 var
-  LSQL: String;
-  LNewReplace: String;
+  LControllerAbastecimento: IController<TAbastecimento>;
+  LDataConverter: IDataConverter<TAbastecimento>;
+  LAbastecimentos: TObjectList<TAbastecimento>;
+begin
+  LControllerAbastecimento:= TControllerAbastecimento.Create();
+  DataSet.Close();
+
+  DataSet.CreateDataSet();
+
+  LAbastecimentos := LControllerAbastecimento.Report(dtpDataIni.Date, dtpDataFinal.Date);
+  try
+    LDataConverter:= TDataConverterAbastecimento.Create();
+    LDataConverter.PopulateReport(LAbastecimentos, DataSet);
+
+    DataSet.Open();
+
+  finally
+    FreeAndNil(LAbastecimentos);
+  end;
+end;
+
+procedure TfrmRelAbastecimentos.Executar();
 begin
   FTotalDia := 0;
   FTotalGeral := 0;
 
-  LSQL:= QUERY_ABASTECIMENTO;
-
-  if (dtpDataIni.Date > 0) and (dtpDataFinal.Date > 0) then
-    LNewReplace:= ' WHERE ABA.DATA_HORA >= :DATA_INICIAL AND ABA.DATA_HORA <= :DATA_FINAL '
-  else
-    LNewReplace:= ' ';
-
-  LSQL:= StringReplace(LSQL ,'@CLAUSE_WHERE@', LNewReplace, [rfReplaceAll]);
-
-  qryAbastecimentos.SQL.Clear();
-  qryAbastecimentos.SQL.Add(LSQL);
-
-  if LNewReplace <> EmptyStr then
-    begin
-      qryAbastecimentos.Params.ParamByName('DATA_INICIAL').AsDate := dtpDataIni.Date;
-      qryAbastecimentos.Params.ParamByName('DATA_FINAL').AsDate := dtpDataFinal.Date;
-    end;
-
-  qryAbastecimentos.Open();
+  PrepareReport(cdsAbastecimentos);
 
   Report.Preview();
 end;
