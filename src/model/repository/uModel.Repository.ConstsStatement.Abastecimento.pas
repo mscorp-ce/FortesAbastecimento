@@ -7,15 +7,17 @@ const
     '   SELECT CAST(ABA.DATA_HORA AS DATE) AS DIA, ' + sLineBreak +
     '          TAN.DESCRICAO AS TANQUE, ' + sLineBreak +
     '          BOM.NUMERO_BOMBA, ' + sLineBreak +
-    '          SUM(ABA.VALOR_TOTAL) AS VALOR ' + sLineBreak +
+    '          SUM(ABA.VALOR_TOTAL) AS VALOR, ' + sLineBreak +
+    '          ABA.IMPOSTO ' + sLineBreak +
     '     FROM ABASTECIMENTOS ABA ' + sLineBreak +
     '     JOIN BOMBAS BOM ON ABA.ID_BOMBA = BOM.ID_BOMBA ' + sLineBreak +
     '     JOIN TANQUES TAN ON BOM.ID_TANQUE = TAN.ID_TANQUE ' + sLineBreak +
     '     @CLAUSE_WHERE@ ' + sLineBreak +
     ' GROUP BY CAST(ABA.DATA_HORA AS DATE), ' + sLineBreak +
     '          TAN.DESCRICAO, ' + sLineBreak +
-    '          BOM.NUMERO_BOMBA ' + sLineBreak +
-    ' ORDER BY DIA, TANQUE, NUMERO_BOMBA; ';
+    '          BOM.NUMERO_BOMBA, ' + sLineBreak +
+    '          ABA.IMPOSTO ' + sLineBreak +
+    ' ORDER BY DIA, TANQUE, NUMERO_BOMBA, IMPOSTO; ';
 
   QUERY_MOVIMENTO_ABASTECIMENTO =
     'SELECT ABA.ID_ABASTECIMENTO, ' + sLineBreak +
