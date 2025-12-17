@@ -172,6 +172,10 @@ begin
   LFromAbastecimento:= TfrmAbastecimento.Create(Self);
   try
     LFromAbastecimento.Id:= Id;
+
+    if State = dsInsert then
+      LFromAbastecimento.dtpDataHora.Date := Now;
+
     LFromAbastecimento.ShowModal();
   finally
     FreeAndNil(LFromAbastecimento);
