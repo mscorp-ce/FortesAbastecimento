@@ -21,7 +21,6 @@ type
     { Private declarations }
   public
     { Public declarations }
-    procedure PrepareReport(DataSet: TClientDataSet);
   end;
 
 var
@@ -30,8 +29,7 @@ var
 implementation
 
 uses
-  uView.FormConsultaAbastecimento, uView.Rel.Abastecimentos, uModel.Abstraction, uModel.Entities.Abastecimento,
-  uController.Abastecimento, System.Generics.Collections, uController.DataConverter.Abastecimento;
+  uView.FormConsultaAbastecimento, uView.Rel.Abastecimentos;
 
 {$R *.dfm}
 
@@ -44,29 +42,6 @@ begin
     LfrmConsultaAbastecimento.ShowModal();
   finally
     FreeAndNil(LfrmConsultaAbastecimento)
-  end;
-end;
-
-procedure TfrmMain.PrepareReport(DataSet: TClientDataSet);
-var
-  LControllerAbastecimento: IController<TAbastecimento>;
-  LDataConverter: IDataConverter<TAbastecimento>;
-  LAbastecimentos: TObjectList<TAbastecimento>;
-begin
-  LControllerAbastecimento:= TControllerAbastecimento.Create();
-  DataSet.Close();
-
-  DataSet.CreateDataSet();
-
-  LAbastecimentos := LControllerAbastecimento.Report(0, 0);
-  try
-    LDataConverter:= TDataConverterAbastecimento.Create();
-    LDataConverter.PopulateReport(LAbastecimentos, DataSet);
-
-    DataSet.Open();
-
-  finally
-    FreeAndNil(LAbastecimentos);
   end;
 end;
 
