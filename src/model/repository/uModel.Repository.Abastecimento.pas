@@ -138,7 +138,7 @@ begin
 
     LSQL:= StringReplace(QUERY_ABASTECIMENTO ,'@CLAUSE_WHERE@', LNewReplace, [rfReplaceAll]);
 
-    Statement.Query.SQL.Add(QUERY_ABASTECIMENTO);
+    Statement.Query.SQL.Add(LSQL);
 
     if LNewReplace <> EmptyStr then
       begin
@@ -147,8 +147,6 @@ begin
       end;
 
     Statement.Query.Open();
-
-    //Statement.SQL(QUERY_ABASTECIMENTO).Open();
 
     PopulateListEntitieReport(List, Statement);
 
