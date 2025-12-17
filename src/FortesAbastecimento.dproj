@@ -178,10 +178,6 @@
             <Form>frmRelAbastecimentos</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="view\uView.ContextoAbastecimento.pas">
-            <Form>frmContextoAbastecimento</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
