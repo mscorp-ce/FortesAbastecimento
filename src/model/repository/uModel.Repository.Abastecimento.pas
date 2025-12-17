@@ -337,6 +337,7 @@ begin
     Entity.Bomba.Tanque.Descricao := Statement.Query.FieldByName('TANQUE').AsString;
     Entity.Bomba.Numero := Statement.Query.FieldByName('NUMERO_BOMBA').AsInteger;
     Entity.ValorTotal := Statement.Query.FieldByName('VALOR').AsCurrency;
+    Entity.Imposto := Statement.Query.FieldByName('IMPOSTO').AsCurrency;
 
   except
     on Error: EFDDBEngineException do
